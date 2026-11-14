@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -40,18 +42,25 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
 
 
+  double ballGeschwindigkeitX = Random().nextDouble() * -50;
 
-
+  double ballGeschwindigkeitY = Random().nextDouble() * -50;
 
 
   // Aktuelle Position und Mittelpunkt des Balls
   double ballX = 0;
   double ballY = 0;
-  double ballDurchmesser = 50;
+  double ballDurchmesser = 30;
+
+  double schlaegerY = 300;
+
 
   // Größe des Spielfeld
   double spielfeldBreite = 0;
   double spielfeldHoehe = 0;
+
+  double schlaegerHoehe = 130;
+  double schlaegerBreite = 50;
 
   // Pfeiltaste gedrückt
   bool pfeilHoch = false;
@@ -63,7 +72,28 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   // ============================================================
 
   void nextTick() {
-    ballX = ballX + 1;
+    ballX = ballX + ballGeschwindigkeitX;
+    ballY = ballY + ballGeschwindigkeitY;
+
+  if(ballX > spielfeldBreite -ballDurchmesser /2) {
+    ballGeschwindigkeitX = 0 -ballGeschwindigkeitX;
+  }
+
+  if(ballX < 0 + ballDurchmesser /2) {
+     ballGeschwindigkeitX = 0 -ballGeschwindigkeitX;
+  }
+
+  if(ballY > spielfeldHoehe - ballDurchmesser /2) {
+    ballGeschwindigkeitY = 0 - ballGeschwindigkeitY;
+  }
+
+  if(ballY < 0 + ballDurchmesser /2) {
+    ballGeschwindigkeitY = - ballGeschwindigkeitY;
+  }
+
+  if(pfeilHoch == true) {
+    schlaegerHoehe = schlaegerHoehe + 1;
+  }
   }
 
 
@@ -138,6 +168,18 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                     ),
                     // Ende Ball
 
+
+                     // Schläger <----------------------------------------------------------------------------------------------------------------
+
+                    Positioned(
+                      left: spielfeldBreite - 55,
+                      top: schlaegerY,
+                      child: Container(
+                        width: schlaegerBreite,
+                        height: schlaegerHoehe,
+                        color: Colors.black
+                      ),
+                    ),
 
 
                   ],
