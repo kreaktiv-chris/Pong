@@ -63,9 +63,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   // ============================================================
 
   void nextTick() {
-    ballX = ballX - 1
-    ;
-
+    ballX = ballX + 1;
   }
 
 
