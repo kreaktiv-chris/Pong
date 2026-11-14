@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Pong – Lernprojekt</title>
+<style>
+:root{color-scheme:light dark;--bg:#ffffff;--fg:#232932;--muted:#586475;--edge:#dde3e9;--code:#f3f5f8;--accent:#247b45}
+@media(prefers-color-scheme:dark){:root{--bg:#1e2229;--fg:#e5e9ef;--muted:#b3bdc9;--edge:#3e4652;--code:#292f38;--accent:#78cb95}}
+*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1024px;margin:0 auto;padding:32px 42px 90px}h1,h2,h3{line-height:1.28;scroll-margin-top:20px}h1{font-size:1.75rem;margin:2.2rem 0 1rem;color:var(--accent)}h1:first-child{margin-top:0;font-size:2.2rem}h2{font-size:1.35rem;margin:2.1rem 0 .65rem}h3{font-size:1.05rem;margin:1.4rem 0 .4rem}p{margin:.65rem 0 1rem}li{margin:.3rem 0}hr{border:0;border-top:1px solid var(--edge);margin:2.2rem 0}pre{background:var(--code);border:1px solid var(--edge);border-radius:8px;padding:13px 17px;overflow-x:auto;line-height:1.5}code{font:0.94em/1.5 Consolas,"Cascadia Code",monospace}p code,li code,h2 code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{padding:0;background:none}strong{font-weight:650}a{color:var(--accent)}
+@media(max-width:none){main{padding:22px 20px 60px}h1{font-size:1.5rem}h1:first-child{font-size:1.85rem}}
+@media print{:root{color-scheme:light}body{font-size:11pt;color:#202020;background:white}main{max-width:none;padding:0}h1,h2,h3{break-after:avoid}pre{break-inside:avoid}hr{margin:1rem 0}}
+</style>
+</head>
+<body><main><h1>Pong – Lernprojekt</h1>
+<p>In diesem Projekt entwickelst du Schritt für Schritt dein eigenes Pong-Spiel.</p>
+<p>Ein Teil des technischen Grundgerüsts ist bereits vorbereitet. Du musst dich zunächst nicht darum kümmern, wie Flutter das Fenster zeichnet oder wie die Spielschleife funktioniert.</p>
+<p>Die wichtigste Funktion für dich ist:</p>
+<pre><code class="language-dart">void nextTick() {
+  ballX = ballX + 1;
+}
+</code></pre>
+<p>Diese Funktion wird regelmäßig aufgerufen und bildet damit die Spielschleife. Alles, was sich im Spiel bewegen oder regelmäßig geprüft werden soll, kann hier verarbeitet werden.</p>
+<p>Bereits vorhandene wichtige Variablen sind unter anderem:</p>
+<pre><code class="language-dart">double ballX;
+double ballY;
+double ballDurchmesser;
+
+double spielfeldBreite;
+double spielfeldHoehe;
+
+bool pfeilHoch;
+bool pfeilRunter;
+</code></pre>
+<p>Versuche die Aufgaben möglichst selbst zu lösen. Wenn etwas nicht funktioniert, nutze den Debugger, <code>print()</code>, die Dokumentation oder suche nach einer Lösung.</p>
+<hr />
+<h1>Teil 1 – Bewegung des Balls</h1>
+<h2>Aufgabe 1 – Geschwindigkeit verändern</h2>
+<p>Der Ball bewegt sich bereits automatisch nach rechts:</p>
+<pre><code class="language-dart">ballX = ballX + 1;
+</code></pre>
+<p>Verändere die Geschwindigkeit des Balls.</p>
+<p>Probiere aus, was passiert, wenn du statt <code>1</code> beispielsweise <code>2</code>, <code>5</code>, <code>10</code> oder <code>0.5</code> verwendest.</p>
+<h3>Hinweise</h3>
+<p><code>ballX</code> enthält die aktuelle horizontale Position des Balls.</p>
+<p>Wenn du einen größeren Wert addierst, legt der Ball bei jedem Aufruf von <code>nextTick()</code> eine größere Strecke zurück.</p>
+<p>Versuche auch herauszufinden, was passiert, wenn du eine negative Zahl verwendest.</p>
+<hr />
+<h2>Aufgabe 2 – Geschwindigkeit in einer Variable speichern</h2>
+<p>Momentan steht die Geschwindigkeit direkt im Programmcode.</p>
+<p>Erstelle eine eigene Variable für die horizontale Geschwindigkeit des Balls.</p>
+<p>Ein sinnvoller Name wäre beispielsweise:</p>
+<pre><code class="language-dart">double ballGeschwindigkeitX;
+</code></pre>
+<p>Verwende diese Variable anschließend in <code>nextTick()</code>.</p>
+<h3>Ziel</h3>
+<p>Am Ende solltest du die Geschwindigkeit nur noch an <strong>einer einzigen Stelle</strong> verändern müssen.</p>
+<h3>Hinweise</h3>
+<p>Anstatt eine feste Zahl zu addieren, kannst du den Inhalt einer Variable addieren.</p>
+<p>Eine negative Geschwindigkeit bedeutet Bewegung nach links, eine positive Geschwindigkeit Bewegung nach rechts.</p>
+<hr />
+<h2>Aufgabe 3 – Ball an der rechten Wand abprallen lassen</h2>
+<p>Momentan fliegt der Ball irgendwann rechts aus dem Spielfeld.</p>
+<p>Sorge dafür, dass er beim Erreichen einer bestimmten X-Position seine Bewegungsrichtung ändert.</p>
+<h3>Hinweise</h3>
+<p>Die aktuelle Position findest du in:</p>
+<pre><code class="language-dart">ballX
+</code></pre>
+<p>Mit einer <code>if</code>-Abfrage kannst du prüfen, ob der Ball eine bestimmte Position erreicht hat.</p>
+<p>Beispiel für den Aufbau einer Bedingung:</p>
+<pre><code class="language-dart">if (bedingung) {
+  // etwas machen
+}
+</code></pre>
+<p>Überlege, wie du die X-Position verändern musst, damit sich der Ball anschließend wieder nach links bewegt.</p>
+<hr />
+<h2>Aufgabe 4 – Auch an der linken Wand abprallen</h2>
+<p>Der Ball kann jetzt rechts abprallen, fliegt danach aber links aus dem Spielfeld.</p>
+<p>Erweitere deine Lösung so, dass er auch an der linken Wand wieder seine Richtung ändert.</p>
+<p>Am Ende soll der Ball dauerhaft zwischen beiden Seiten hin- und herfliegen.</p>
+<h3>Hinweise</h3>
+<p>Du benötigst jetzt zwei Situationen:</p>
+<ul>
+<li>Ball erreicht die rechte Seite</li>
+<li>Ball erreicht die linke Seite</li>
+</ul>
+<p>Du kannst mehrere <code>if</code>-Abfragen verwenden.</p>
+<hr />
+<h2>Aufgabe 5 – Spielfeldbreite verwenden</h2>
+<p>Bisher hast du möglicherweise eine feste Zahl verwendet, um festzustellen, wann der Ball die rechte Wand erreicht.</p>
+<p>Das funktioniert jedoch nicht mehr, wenn das Fenster größer oder kleiner wird.</p>
+<p>Nutze deshalb die bereits vorhandene Variable:</p>
+<pre><code class="language-dart">spielfeldBreite
+</code></pre>
+<h3>Ziel</h3>
+<p>Der Ball soll unabhängig von der Fenstergröße korrekt an der rechten Wand abprallen.</p>
+<hr />
+<h2>Aufgabe 6 – Ballgröße berücksichtigen</h2>
+<p><code>ballX</code> beschreibt den <strong>Mittelpunkt</strong> des Balls.</p>
+<p>Wenn du nur prüfst:</p>
+<pre><code class="language-dart">ballX &gt;= spielfeldBreite
+</code></pre>
+<p>ist bereits die Hälfte des Balls außerhalb des Spielfeldes.</p>
+<p>Sorge dafür, dass der Ball genau dann abprallt, wenn sein äußerer Rand die Wand erreicht.</p>
+<h3>Hinweise</h3>
+<p>Die Größe des Balls steht in:</p>
+<pre><code class="language-dart">ballDurchmesser
+</code></pre>
+<p>Überlege, welchen Abstand der Mittelpunkt des Balls von seinem äußeren Rand hat.</p>
+<hr />
+<h1>Teil 2 – Bewegung in zwei Dimensionen</h1>
+<h2>Aufgabe 7 – Ball auch nach oben oder unten bewegen</h2>
+<p>Bisher verändert sich nur:</p>
+<pre><code class="language-dart">ballX
+</code></pre>
+<p>Füge jetzt eine Bewegung auf der Y-Achse hinzu.</p>
+<p>Dafür steht bereits:</p>
+<pre><code class="language-dart">ballY
+</code></pre>
+<p>zur Verfügung.</p>
+<h3>Hinweise</h3>
+<p>Erstelle zusätzlich eine Variable für die Y-Geschwindigkeit.</p>
+<p>Zum Beispiel:</p>
+<pre><code class="language-dart">double ballGeschwindigkeitY;
+</code></pre>
+<p>Verändere anschließend bei jedem <code>nextTick()</code> sowohl <code>ballX</code> als auch <code>ballY</code>.</p>
+<hr />
+<h2>Aufgabe 8 – Oben und unten abprallen</h2>
+<p>Der Ball bewegt sich jetzt diagonal, kann aber oben oder unten aus dem Spielfeld verschwinden.</p>
+<p>Sorge dafür, dass er auch an der oberen und unteren Wand abprallt.</p>
+<h3>Hinweise</h3>
+<p>Die Höhe des Spielfeldes steht in:</p>
+<pre><code class="language-dart">spielfeldHoehe
+</code></pre>
+<p>Für die vertikale Bewegung ist die Y-Geschwindigkeit zuständig.</p>
+<p>Auch hier musst du den Radius des Balls berücksichtigen.</p>
+<hr />
+<h2>Aufgabe 9 – Unterschiedliche Flugrichtungen testen</h2>
+<p>Verändere die Werte von:</p>
+<pre><code class="language-dart">ballGeschwindigkeitX
+ballGeschwindigkeitY
+</code></pre>
+<p>und beobachte die Flugbahn.</p>
+<p>Teste beispielsweise Werte, bei denen:</p>
+<ul>
+<li>X und Y gleich groß sind</li>
+<li>X größer als Y ist</li>
+<li>Y größer als X ist</li>
+<li>Y negativ ist</li>
+</ul>
+<h3>Ziel</h3>
+<p>Verstehe, wie sich die beiden Geschwindigkeiten gemeinsam auf die Flugrichtung auswirken.</p>
+<hr />
+<h2>Aufgabe 10 – Zufällige Startbewegung</h2>
+<p>Der Ball soll beim Start nicht immer exakt gleich fliegen.</p>
+<p>Verwende Zufallszahlen, um unterschiedliche Startgeschwindigkeiten zu erzeugen.</p>
+<h3>Hinweise</h3>
+<p>Dart besitzt dafür die Klasse:</p>
+<pre><code class="language-dart">Random
+</code></pre>
+<p>Dafür benötigst du:</p>
+<pre><code class="language-dart">import 'dart:math';
+</code></pre>
+<p>Informiere dich darüber, wie <code>Random</code> verwendet wird.</p>
+<p>Achte darauf, dass der Ball nicht mit Geschwindigkeit <code>0</code> startet.</p>
+<hr />
+<h1>Teil 3 – Der erste Schläger</h1>
+<h2>Aufgabe 11 – Schläger hinzufügen</h2>
+<p>Auf der rechten Seite des Spielfeldes soll ein rechteckiger Schläger erscheinen.</p>
+<p>Schau dir an, wie der Ball im vorhandenen <code>Stack</code> dargestellt wird.</p>
+<p>Der Ball verwendet unter anderem:</p>
+<pre><code class="language-dart">Positioned
+Container
+</code></pre>
+<p>Nutze dasselbe Prinzip für deinen Schläger.</p>
+<h3>Ziel</h3>
+<p>Auf der rechten Seite soll ein einfaches Rechteck erscheinen.</p>
+<p>Noch muss es sich nicht bewegen.</p>
+<hr />
+<h2>Aufgabe 12 – Schlägerposition als Variable speichern</h2>
+<p>Momentan hast du die Position vermutlich direkt im <code>Positioned</code> eingetragen.</p>
+<p>Erstelle eine Variable für die vertikale Position des Schlägers.</p>
+<p>Zum Beispiel:</p>
+<pre><code class="language-dart">double schlaegerY;
+</code></pre>
+<p>Verwende diese Variable anschließend bei der Darstellung.</p>
+<h3>Ziel</h3>
+<p>Die Position des Schlägers soll durch das Verändern einer Variable geändert werden können.</p>
+<hr />
+<h2>Aufgabe 13 – Größe des Schlägers als Variablen speichern</h2>
+<p>Lege für Höhe und Breite des Schlägers eigene Variablen an.</p>
+<p>Zum Beispiel:</p>
+<pre><code class="language-dart">double schlaegerHoehe;
+double schlaegerBreite;
+</code></pre>
+<p>Verwende sie anschließend sowohl beim Zeichnen als auch später bei der Kollisionsprüfung.</p>
+<hr />
+<h1>Teil 4 – Steuerung</h1>
+<h2>Aufgabe 14 – Schläger nach oben bewegen</h2>
+<p>Die Tastaturerkennung ist bereits vorbereitet.</p>
+<p>Wenn die Pfeiltaste nach oben gedrückt gehalten wird, ist:</p>
+<pre><code class="language-dart">pfeilHoch
+</code></pre>
+<p><code>true</code>.</p>
+<p>Nutze diesen Wert in <code>nextTick()</code>, um den Schläger nach oben zu bewegen.</p>
+<h3>Hinweise</h3>
+<p>Auf dem Bildschirm werden kleinere Y-Werte weiter oben dargestellt.</p>
+<hr />
+<h2>Aufgabe 15 – Schläger nach unten bewegen</h2>
+<p>Wenn die Pfeiltaste nach unten gedrückt wird, ist:</p>
+<pre><code class="language-dart">pfeilRunter
+</code></pre>
+<p><code>true</code>.</p>
+<p>Nutze diese Variable, damit sich der Schläger nach unten bewegt.</p>
+<hr />
+<h2>Aufgabe 16 – Bewegungsgeschwindigkeit des Schlägers</h2>
+<p>Erstelle eine eigene Variable für die Geschwindigkeit des Schlägers.</p>
+<p>Dadurch soll später an einer einzigen Stelle festgelegt werden können, wie schnell sich der Spieler bewegen kann.</p>
+<hr />
+<h2>Aufgabe 17 – Schläger im Spielfeld halten</h2>
+<p>Momentan kann der Spieler seinen Schläger oben oder unten aus dem Spielfeld herausbewegen.</p>
+<p>Verhindere das.</p>
+<h3>Hinweise</h3>
+<p>Du kennst:</p>
+<pre><code class="language-dart">spielfeldHoehe
+schlaegerY
+schlaegerHoehe
+</code></pre>
+<p>Überlege auch hier, ob <code>schlaegerY</code> die obere Position oder den Mittelpunkt des Schlägers beschreibt.</p>
+<p>Lege dich bewusst auf eine Variante fest und verwende sie überall einheitlich.</p>
+<hr />
+<h1>Teil 5 – Kollision mit dem Schläger</h1>
+<h2>Aufgabe 18 – Prüfen, ob der Ball den Schläger erreicht</h2>
+<p>Prüfe zunächst nur die horizontale Position.</p>
+<p>Stelle fest, wann der Ball die X-Position des Schlägers erreicht.</p>
+<h3>Hinweise</h3>
+<p>Dafür benötigst du unter anderem:</p>
+<pre><code class="language-dart">ballX
+ballDurchmesser
+schlaegerBreite
+</code></pre>
+<p>und die X-Position deines Schlägers.</p>
+<hr />
+<h2>Aufgabe 19 – Höhe des Schlägers berücksichtigen</h2>
+<p>Nur weil der Ball die X-Position des Schlägers erreicht, bedeutet das noch nicht, dass er den Schläger tatsächlich trifft.</p>
+<p>Prüfe zusätzlich, ob sich der Ball auf der richtigen Höhe befindet.</p>
+<h3>Hinweise</h3>
+<p>Vergleiche die Y-Position des Balls mit:</p>
+<pre><code class="language-dart">schlaegerY
+schlaegerHoehe
+</code></pre>
+<p>Der Ball besitzt selbst ebenfalls eine Größe.</p>
+<hr />
+<h2>Aufgabe 20 – Ball am Schläger abprallen lassen</h2>
+<p>Wenn eine Kollision erkannt wurde, soll der Ball wieder nach links fliegen.</p>
+<p>Verändere dazu die horizontale Geschwindigkeit des Balls.</p>
+<h3>Ziel</h3>
+<p>Der Ball soll jetzt sowohl an den Wänden als auch am Schläger abprallen.</p>
+<hr />
+<h1>Teil 6 – Punkte</h1>
+<h2>Aufgabe 21 – Erkennen, wenn der Ball den Schläger verpasst</h2>
+<p>Wenn der Ball rechts aus dem Spielfeld fliegt, ohne den Schläger zu treffen, wurde ein Punkt erzielt.</p>
+<p>Erkenne diesen Zustand.</p>
+<h3>Hinweise</h3>
+<p>Nutze:</p>
+<pre><code class="language-dart">ballX
+spielfeldBreite
+</code></pre>
+<hr />
+<h2>Aufgabe 22 – Punktestand speichern</h2>
+<p>Erstelle eine Variable für den Punktestand.</p>
+<p>Für Punkte eignet sich ein ganzzahliger Datentyp.</p>
+<p>Erhöhe die Punktzahl jedes Mal, wenn der Ball den rechten Spielfeldrand erreicht.</p>
+<hr />
+<h2>Aufgabe 23 – Punktestand anzeigen</h2>
+<p>Zeige den aktuellen Punktestand auf dem Bildschirm an.</p>
+<p>Dafür kannst du beispielsweise ein:</p>
+<pre><code class="language-dart">Text(...)
+</code></pre>
+<p>Widget verwenden.</p>
+<p>Da sich dein Spielfeld bereits in einem <code>Stack</code> befindet, kannst du den Punktestand ebenfalls darin positionieren.</p>
+<hr />
+<h2>Aufgabe 24 – Ball nach einem Punkt zurücksetzen</h2>
+<p>Nach einem Punkt soll der Ball wieder in der Mitte des Spielfeldes erscheinen.</p>
+<p>Es gibt bereits die Funktion:</p>
+<pre><code class="language-dart">reset()
+</code></pre>
+<p>Schau dir an, was diese Funktion macht.</p>
+<p>Nutze sie an einer geeigneten Stelle.</p>
+<hr />
+<h2>Aufgabe 25 – Reset vervollständigen</h2>
+<p>Der Reset-Button setzt momentan nur bestimmte Werte zurück.</p>
+<p>Erweitere <code>reset()</code>, sodass auch:</p>
+<ul>
+<li>Geschwindigkeiten</li>
+<li>Punkte</li>
+<li>Schlägerpositionen</li>
+</ul>
+<p>sinnvoll zurückgesetzt werden.</p>
+<p>Überlege dabei, welche Werte bei einem kompletten Neustart wirklich zurückgesetzt werden sollen.</p>
+<hr />
+<h1>Teil 7 – Zweiter Spieler</h1>
+<h2>Aufgabe 26 – Zweiten Schläger hinzufügen</h2>
+<p>Füge auf der linken Seite einen zweiten Schläger hinzu.</p>
+<p>Versuche möglichst wenig Code einfach zu kopieren.</p>
+<p>Überlege zunächst, welche zusätzlichen Variablen du benötigst.</p>
+<hr />
+<h2>Aufgabe 27 – Tastatursteuerung für Spieler 2</h2>
+<p>Spieler 2 soll mit:</p>
+<pre><code class="language-text">W
+S
+</code></pre>
+<p>gesteuert werden.</p>
+<p>Die vorhandene Tastaturabfrage verarbeitet bisher die Pfeiltasten.</p>
+<p>Erweitere sie um zwei weitere Tasten.</p>
+<p>Dafür kannst du dir ansehen, wie diese Werte geprüft werden:</p>
+<pre><code class="language-dart">LogicalKeyboardKey.arrowUp
+LogicalKeyboardKey.arrowDown
+</code></pre>
+<p>Suche nach den entsprechenden Tastencodes für <code>W</code> und <code>S</code>.</p>
+<hr />
+<h2>Aufgabe 28 – Kollisionsprüfung für Spieler 2</h2>
+<p>Der Ball soll auch am linken Schläger abprallen.</p>
+<p>Übertrage deine bereits vorhandene Kollisionslogik auf Spieler 2.</p>
+<h3>Ziel</h3>
+<p>Jetzt kann der Ball zwischen beiden Spielern hin- und hergespielt werden.</p>
+<hr />
+<h2>Aufgabe 29 – Punkte für beide Spieler</h2>
+<p>Erstelle einen eigenen Punktestand für beide Spieler.</p>
+<p>Verpasst der rechte Spieler den Ball, erhält Spieler 1 einen Punkt.</p>
+<p>Verpasst der linke Spieler den Ball, erhält Spieler 2 einen Punkt.</p>
+<p>Zeige beide Punktestände an.</p>
+<hr />
+<h1>Teil 8 – Ein vollständiges Spiel</h1>
+<h2>Aufgabe 30 – Gewinner bestimmen</h2>
+<p>Das Spiel soll nicht unbegrenzt laufen.</p>
+<p>Lege beispielsweise fest:</p>
+<pre><code class="language-text">Wer zuerst 10 Punkte erreicht, gewinnt.
+</code></pre>
+<p>Prüfe nach jedem Punkt, ob einer der Spieler die notwendige Punktzahl erreicht hat.</p>
+<hr />
+<h2>Aufgabe 31 – Spiel beenden</h2>
+<p>Wenn ein Spieler gewonnen hat, darf sich der Ball nicht weiterbewegen.</p>
+<p>Erstelle dafür eine Variable, die speichert, ob das Spiel aktuell läuft.</p>
+<p>Beispielsweise könnte dafür ein <code>bool</code> verwendet werden.</p>
+<hr />
+<h2>Aufgabe 32 – Gewinner anzeigen</h2>
+<p>Wenn das Spiel beendet wurde, soll auf dem Bildschirm angezeigt werden, welcher Spieler gewonnen hat.</p>
+<p>Du kannst dafür wieder ein <code>Text</code>-Widget verwenden.</p>
+<hr />
+<h2>Aufgabe 33 – Neues Spiel starten</h2>
+<p>Der vorhandene Reset-Button soll nach dem Spielende ein komplett neues Spiel starten können.</p>
+<p>Dabei müssen alle wichtigen Werte wieder ihren Ausgangszustand erhalten.</p>
+<hr />
+<h1>Teil 9 – Das Spiel interessanter machen</h1>
+<h2>Aufgabe 34 – Ball bei jedem Treffer schneller machen</h2>
+<p>Nach jedem erfolgreichen Treffer auf einem Schläger soll der Ball etwas schneller werden.</p>
+<h3>Hinweise</h3>
+<p>Du besitzt bereits Geschwindigkeitsvariablen für X und Y.</p>
+<p>Achte darauf, dass das Vorzeichen erhalten bleibt.</p>
+<p>Ein nach links fliegender Ball sollte nach einer Geschwindigkeitserhöhung weiterhin nach links fliegen.</p>
+<hr />
+<h2>Aufgabe 35 – Maximale Geschwindigkeit</h2>
+<p>Wenn der Ball nach jedem Treffer schneller wird, wird er irgendwann unspielbar.</p>
+<p>Lege deshalb eine maximale Geschwindigkeit fest.</p>
+<p>Prüfe vor einer weiteren Erhöhung, ob diese Grenze bereits erreicht wurde.</p>
+<hr />
+<h2>Aufgabe 36 – Abprallwinkel verändern</h2>
+<p>Momentan ändert sich beim Treffen des Schlägers vermutlich nur die X-Richtung.</p>
+<p>Verbessere das Verhalten.</p>
+<p>Trifft der Ball:</p>
+<ul>
+<li>oben auf den Schläger → soll er stärker nach oben fliegen</li>
+<li>mittig → eher gerade</li>
+<li>unten → stärker nach unten</li>
+</ul>
+<h3>Hinweise</h3>
+<p>Vergleiche:</p>
+<pre><code class="language-dart">ballY
+</code></pre>
+<p>mit der Position und Höhe des Schlägers.</p>
+<p>Berechne, wie weit der Treffer von der Mitte des Schlägers entfernt war.</p>
+<hr />
+<h2>Aufgabe 37 – Zufällige Startrichtung</h2>
+<p>Nach einem Punkt soll der Ball nicht immer zum selben Spieler starten.</p>
+<p>Wähle zufällig, ob er zunächst nach links oder rechts fliegt.</p>
+<hr />
+<h2>Aufgabe 38 – Pause nach einem Punkt</h2>
+<p>Nach einem erzielten Punkt soll der Ball kurz in der Mitte stehen bleiben, bevor die nächste Runde beginnt.</p>
+<p>Überlege, wie du speichern kannst, ob eine Runde momentan läuft.</p>
+<hr />
+<h2>Aufgabe 39 – Countdown</h2>
+<p>Baue vor dem Start einer Runde einen Countdown ein:</p>
+<pre><code class="language-text">3
+2
+1
+GO!
+</code></pre>
+<p>Der Ball darf sich erst nach dem Countdown bewegen.</p>
+<hr />
+<h1>Teil 10 – Computergegner</h1>
+<h2>Aufgabe 40 – Computer übernimmt einen Schläger</h2>
+<p>Baue einen Spielmodus ein, bei dem einer der beiden Schläger automatisch gesteuert wird.</p>
+<p>Der Computer kennt:</p>
+<pre><code class="language-dart">ballY
+</code></pre>
+<p>und die Position seines eigenen Schlägers.</p>
+<p>Bewege den Schläger in Richtung des Balls.</p>
+<hr />
+<h2>Aufgabe 41 – Computer nicht perfekt spielen lassen</h2>
+<p>Wenn der Computer immer exakt der Position des Balls folgt, ist er fast unschlagbar.</p>
+<p>Begrenze deshalb seine Bewegungsgeschwindigkeit.</p>
+<p>Der Computer darf sich pro Tick nur um eine bestimmte Strecke bewegen.</p>
+<hr />
+<h2>Aufgabe 42 – Schwierigkeitsgrade</h2>
+<p>Füge unterschiedliche Schwierigkeitsgrade hinzu.</p>
+<p>Zum Beispiel:</p>
+<h3>Einfach</h3>
+<p>Langsamer Computergegner.</p>
+<h3>Mittel</h3>
+<p>Schnellerer Computergegner.</p>
+<h3>Schwer</h3>
+<p>Sehr schneller Computergegner.</p>
+<p>Überlege, welche Variable du verändern kannst, ohne die gesamte Spiellogik umzuschreiben.</p>
+<hr />
+<h1>Teil 11 – Menü und Spielzustände</h1>
+<h2>Aufgabe 43 – Startmenü</h2>
+<p>Erstelle ein einfaches Menü, bevor das Spiel beginnt.</p>
+<p>Der Spieler soll auswählen können:</p>
+<pre><code class="language-text">1 Spieler
+2 Spieler
+</code></pre>
+<p>Optional kannst du anschließend auch den Schwierigkeitsgrad auswählen lassen.</p>
+<hr />
+<h2>Aufgabe 44 – Pause</h2>
+<p>Ermögliche es, das laufende Spiel zu pausieren.</p>
+<p>Während einer Pause dürfen sich:</p>
+<ul>
+<li>Ball</li>
+<li>Spieler</li>
+<li>Computergegner</li>
+</ul>
+<p>nicht bewegen.</p>
+<hr />
+<h2>Aufgabe 45 – Spielzustand speichern</h2>
+<p>Bisher verwendest du möglicherweise mehrere <code>bool</code>-Variablen wie:</p>
+<pre><code class="language-dart">spielLaeuft
+spielPausiert
+spielBeendet
+</code></pre>
+<p>Überlege, ob du den Zustand des Spiels übersichtlicher speichern kannst.</p>
+<p>Informiere dich dazu über:</p>
+<pre><code class="language-dart">enum
+</code></pre>
+<p>Mögliche Zustände könnten beispielsweise sein:</p>
+<pre><code class="language-text">menue
+countdown
+spielen
+pause
+beendet
+</code></pre>
+<hr />
+<h1>Teil 12 – Code verbessern</h1>
+<h2>Aufgabe 46 – <code>nextTick()</code> aufräumen</h2>
+<p>Mit der Zeit wird <code>nextTick()</code> wahrscheinlich sehr groß.</p>
+<p>Teile den Code in mehrere Funktionen auf.</p>
+<p>Beispielsweise könntest du Funktionen für folgende Aufgaben erstellen:</p>
+<pre><code class="language-text">Ball bewegen
+Spieler bewegen
+Kollisionen prüfen
+Punkte prüfen
+</code></pre>
+<p>Die Namen und genaue Aufteilung bestimmst du selbst.</p>
+<h3>Ziel</h3>
+<p><code>nextTick()</code> soll am Ende einfach erkennen lassen, <strong>was</strong> pro Spielschritt passiert.</p>
+<hr />
+<h2>Aufgabe 47 – Doppelte Logik finden</h2>
+<p>Suche im Programm nach Code, der für Spieler 1 und Spieler 2 fast identisch ist.</p>
+<p>Überlege, wie du diesen Code zusammenfassen kannst.</p>
+<h3>Ziel</h3>
+<p>Änderungen sollen möglichst nicht an mehreren Stellen gleichzeitig notwendig sein.</p>
+<hr />
+<h2>Aufgabe 48 – Eigene Klasse für einen Schläger</h2>
+<p>Momentan besitzt du wahrscheinlich viele einzelne Variablen:</p>
+<pre><code class="language-text">Position Spieler 1
+Position Spieler 2
+Breite Spieler 1
+Breite Spieler 2
+Höhe Spieler 1
+Höhe Spieler 2
+Geschwindigkeit Spieler 1
+Geschwindigkeit Spieler 2
+</code></pre>
+<p>Das wird schnell unübersichtlich.</p>
+<p>Erstelle deshalb eine eigene Klasse für einen Schläger.</p>
+<h3>Informiere dich über</h3>
+<pre><code class="language-dart">class
+</code></pre>
+<p>Eine Klasse kann Daten und Funktionen zusammenfassen, die logisch zusammengehören.</p>
+<hr />
+<h2>Aufgabe 49 – Eigene Klasse für den Ball</h2>
+<p>Lagere anschließend auch den Ball in eine eigene Klasse aus.</p>
+<p>Überlege, welche Informationen zu einem Ball gehören.</p>
+<p>Zum Beispiel:</p>
+<pre><code class="language-text">X-Position
+Y-Position
+X-Geschwindigkeit
+Y-Geschwindigkeit
+Durchmesser
+</code></pre>
+<p>Überlege auch, welche Funktionen sinnvoll zum Ball gehören könnten.</p>
+<hr />
+<h1>Teil 13 – Dein eigenes Pong</h1>
+<h2>Aufgabe 50 – Verbessere das Spiel selbstständig</h2>
+<p>Das Grundspiel ist jetzt fertig.</p>
+<p>Ab hier entscheidest du selbst, was du verbessern möchtest.</p>
+<p>Mögliche Ideen:</p>
+<ul>
+<li>Sounds</li>
+<li>Animationen</li>
+<li>unterschiedliche Ballfarben</li>
+<li>unterschiedliche Spielfeldgrößen</li>
+<li>verschiedene Schläger</li>
+<li>Power-Ups</li>
+<li>Mehrball-Modus</li>
+<li>Highscore</li>
+<li>Statistiken</li>
+<li>Einstellungen</li>
+<li>verschiedene Spielmodi</li>
+<li>bessere Menüs</li>
+<li>Touch-Steuerung für Smartphones</li>
+</ul>
+<p>Ab jetzt gibt es keine genaue Anleitung mehr.</p>
+<p>Überlege dir eine eigene Funktion, plane wie du sie umsetzen möchtest und programmiere sie selbst.</p>
+<hr />
+<h1>Wichtig</h1>
+<p>Bei diesem Projekt geht es nicht darum, jede Aufgabe sofort perfekt zu lösen.</p>
+<p>Wenn dein Programm funktioniert, ist das zunächst ein Erfolg.</p>
+<p>Später wirst du lernen, denselben Code übersichtlicher, kürzer und besser strukturiert zu schreiben.</p>
+<p>Ein funktionierender erster Versuch ist besser als eine perfekte Lösung, die nie fertig wird.</p>
+</main></body></html>
